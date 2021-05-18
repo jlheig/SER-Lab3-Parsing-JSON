@@ -44,8 +44,18 @@ public class Parser {
 
             //get the coordinates from the JSON
             Object geometry = ((JSONObject) country).get("geometry");
-            Object coordinates = ((JSONObject) geometry).get("coordinates");
-            System.out.println(coordinates);
+            Object geoType = ((JSONObject) geometry).get("type");
+            Object coordinates;
+            if(geoType.toString().equals("Polygon")){
+                coordinates = ((JSONObject) geometry).get("coordinates");
+            }
+            else if (geoType.toString().equals("MultiPolygon")){
+                coordinates = ((JSONArray) geometry);
+                System.out.println(coordinates);
+            }
+            else{
+                //TODO error msg
+            }
         }
 
         return pays;
