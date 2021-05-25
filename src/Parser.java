@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Parser {
 
@@ -33,7 +34,7 @@ public class Parser {
     private static ArrayList<Pays> generateCountries(JSONArray countries){
 
         int size = countries.size();
-        ArrayList<Pays> pays = new ArrayList<Pays>();
+        ArrayList<Pays> paysListe = new ArrayList<Pays>();
 
         for(Object country : countries){
 
@@ -42,23 +43,45 @@ public class Parser {
             String abrevation = (String) ((JSONObject) properties).get("ISO_A3");
             String nom = (String) ((JSONObject) properties).get("ADMIN");
 
+            Pays pays = new Pays(abrevation, nom);
+
             //get the coordinates from the JSON
             Object geometry = ((JSONObject) country).get("geometry");
             Object geoType = ((JSONObject) geometry).get("type");
-            Object coordinates;
-            if(geoType.toString().equals("Polygon")){
-                coordinates = ((JSONObject) geometry).get("coordinates");
-            }
-            else if (geoType.toString().equals("MultiPolygon")){
-                coordinates = ((JSONArray) geometry);
-                System.out.println(coordinates);
-            }
-            else{
-                //TODO error msg
-            }
-        }
 
-        return pays;
+            if(geoType.equals("Polygon")){
+                JSONArray geoCoordinates = (JSONArray) ((JSONObject) geometry).get("coordinates");
+                for(Object coordinatesObj : geoCoordinates){
+                    Polygon polygon = new Polygon();
+                    JSONArray coordinates = (JSONArray) coordinatesObj;
+                    for(Object coordinate : coordinates){
+                        Coordinate coord = new Coordinate((Double) ((JSONArray) coordinate).get(0),(Double) ((JSONArray) coordinate).get(1));
+                        polygon.addCoordinate(coord);
+                    }
+                    pays.addPolygon(polygon);
+                }
+            }
+            else if(geoType.equals("MultiPolygon")){
+                JSONArray geoCoordinates = (JSONArray) ((JSONObject) geometry).get("coordinates");
+                for(Object coordinatesGreaterObj : geoCoordinates) {
+                    JSONArray geoGreaterCoordinates = (JSONArray) coordinatesGreaterObj;
+                    for (Object coordinatesObj : geoGreaterCoordinates) {
+                        Polygon polygon = new Polygon();
+                        JSONArray coordinates = (JSONArray) coordinatesObj;
+                        for (Object coordinate : coordinates) {
+                            Coordinate coord = new Coordinate((Double) ((JSONArray) coordinate).get(0), (Double) ((JSONArray) coordinate).get(1));
+                            polygon.addCoordinate(coord);
+                        }
+                        pays.addPolygon(polygon);
+                    }
+                }
+            }
+
+
+            paysListe.add(pays);
+        }
+        
+        return paysListe;
     }
 
 }
