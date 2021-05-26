@@ -26,6 +26,10 @@ public class Parser {
 
             ArrayList<Pays> pays = generateCountries(countries);
 
+            KMLWriter writer = new KMLWriter();
+
+            writer.write(pays);
+
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
