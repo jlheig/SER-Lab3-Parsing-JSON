@@ -20,10 +20,6 @@ public class Parser {
 
             JSONArray countries = (JSONArray) jsonObject.get("features");
 
-            //System.out.println(countries);
-
-
-
             ArrayList<Pays> pays = generateCountries(countries);
 
             KMLWriter writer = new KMLWriter();
@@ -81,6 +77,7 @@ public class Parser {
                 }
             }
 
+            System.out.println(pays);
 
             paysListe.add(pays);
         }

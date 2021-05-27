@@ -17,4 +17,13 @@ public class Pays {
     public String getNom(){ return nom; }
     public ArrayList<Polygon> getPolygons(){ return polygons; }
     public void addPolygon(Polygon polygon){ this.polygons.add(polygon); }
+
+    @Override
+    public String toString(){
+        String res = "("+abrevation+") "+ nom + "\r\n";
+        for(Polygon p : polygons){
+            res += "\t - " + p.getCoordinates().size() + "\r\n";
+        }
+        return res;
+    }
 }
