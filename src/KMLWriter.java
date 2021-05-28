@@ -15,23 +15,29 @@ public class KMLWriter {
     public void write(List<Pays> pays)
     {
         try{
+
+            //balise principale
             Element kml = new Element("kml");
             Document root = new Document(kml);
 
             Element document = new Element("Document");
 
+
+            //<name></name>
             Element name = new Element("name");
             name.addContent("countries.kml");
             document.addContent(name);
 
+            //<Style></Style>Définis un style commun a toute les formes
             Element style = new Element("Style");
             style.setAttribute("id","white-1px");
-
+            //remplissage
             Element PolyStyle = new Element("PolyStyle");
             Element polyColor = new Element("color");
             polyColor.addContent("40e87649");
             PolyStyle.addContent(polyColor);
 
+            //Bordures
             Element LineStyle = new Element("LineStyle");
             Element color = new Element("color");
             color.addContent("ffffffff");
@@ -68,6 +74,17 @@ public class KMLWriter {
                     for(Coordinate coord:shapes.getCoordinates()){
                         strcoord += coord.getX()+","+coord.getY()+" ";
                     }
+                    //imbriquer les elements
+                    /**<Polygon>
+                     *  <OuterBoundaryIs>
+                     *      <LinearRing>
+                     *          <coordinates>
+                     *              x y
+                     *          </coordinates>
+                     *      </LinearRing>
+                     *  </OuterBoundaryIs>
+                     * </Polygon>
+                     */
                     coordinates.addContent(strcoord);
                     linearRing.addContent(coordinates);
                     outerBoundary.addContent(linearRing);
@@ -76,12 +93,13 @@ public class KMLWriter {
                 }
                 country.addContent(MultiGeometry);
                 document.addContent(country);
-
             }
             root.getRootElement().addContent(document);
 
+
+            //écriture du fichier KML dans un objet d'affichage XML
             XMLOutputter out = new XMLOutputter();
-            out.setFormat(Format.getPrettyFormat());
+            out.setFormat(Format.getPrettyFormat()); //mise en forme du fichier
             StringWriter str = new StringWriter();
             out.output(root,str);
 
@@ -89,7 +107,7 @@ public class KMLWriter {
             //write to file
             File file = new File("countries.kml");
             FileWriter writer = new FileWriter(file,false);
-            writer.write(str.toString());
+            writer.write(str.toString()); //écriture dans le fichier
             writer.close();
         }catch(Exception e){
             e.printStackTrace();
