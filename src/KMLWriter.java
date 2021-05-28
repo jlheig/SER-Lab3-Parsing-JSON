@@ -1,15 +1,22 @@
+/**
+ *  Cette classe permet d'implémenter un objet "KMWLWriter".
+ *  Ce dernier permet de créer un fichier .kml à partir d'une liste de pays.
+ *
+ *  Auteurs : Blanc Jean-Luc & Janssens Emmmanuel
+ *  Date : 28.05.2021
+ */
+
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import javax.sound.sampled.Line;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
+
+
 public class KMLWriter {
 
     public void write(List<Pays> pays)

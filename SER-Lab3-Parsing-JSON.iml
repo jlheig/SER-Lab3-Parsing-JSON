@@ -7,20 +7,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/jdom-2.0.6-contrib.jar!/" />
-          <root url="jar://$MODULE_DIR$/jdom-2.0.6-junit.jar!/" />
-          <root url="jar://$MODULE_DIR$/jdom-2.0.6.jar!/" />
-          <root url="jar://$MODULE_DIR$/json-simple-1.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/Modules/json-simple-1.1.1.jar!/" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/jdom-2.0.6-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/jdom-2.0.6-sources.jar!/" />
-        </SOURCES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Modules/jdom-2.0.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
