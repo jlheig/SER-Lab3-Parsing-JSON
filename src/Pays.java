@@ -22,7 +22,7 @@ public class Pays {
     public String toString(){
         String res = "("+abrevation+") "+ nom + "\r\n";
         for(Polygon p : polygons){
-            res += "\t - " + p.getCoordinates().size() + "\r\n";
+            res += "\t - " + p.getCoordinates().size() + " Coordinates\r\n";
         }
         return res;
     }
